@@ -23,7 +23,7 @@ mkdir -p build_trollstore/Payload
 
 # 3. Copier le fichier .app généré dans le dossier Payload
 echo "📦 Copie de l'application..."
-cp -r build_trollstore/Build/Products/Release-iphoneos/ExploreMap.app build_trollstore/Payload/
+cp -r build_trollstore/Build/Products/Release-iphoneos/Odyssey.app build_trollstore/Payload/
 
 # 4. Compresser le dossier Payload en fichier .zip puis le renommer en .ipa
 echo "🗜️ Création du fichier Odyssey.ipa..."
