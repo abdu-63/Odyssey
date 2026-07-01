@@ -12,6 +12,14 @@ Odyssey est une application mobile d'exploration du monde reel inspiree du conce
 - Systeme de statistiques d'exploration detaillees.
 - Systeme d'accomplissements (succes) deverrouillables selon vos exploits d'exploration.
 
+## Installation Directe (IPA)
+
+Si vous souhaitez simplement installer l'application sur votre iPhone sans avoir a la compiler vous-meme :
+
+1. Rendez-vous dans la section [Releases](releases) de ce depot GitHub.
+2. Telechargez le fichier `Odyssey.ipa` de la derniere version disponible.
+3. Installez le fichier sur votre appareil à l'aide de **TrollStore** (methode recommandee), **AltStore** ou **Sideloadly**.
+
 ## Technologies utilisees
 
 - React Native avec Expo SDK 52 (Expo Router, Expo Dev Client).
