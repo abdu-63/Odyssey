@@ -1,0 +1,54 @@
+# ─── Dépendances ────────────────────────────────────────────────────────────────
+node_modules/
+
+# ─── Expo ───────────────────────────────────────────────────────────────────────
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# ─── Variables d'environnement — NE JAMAIS COMMITTER ────────────────────────────
+.env
+.env.local
+.env.production
+
+# ─── iOS natif (généré par expo prebuild) ───────────────────────────────────────
+# Décommenter si tu choisis de ne pas versionner le code natif.
+# Dans ce cas, les collaborateurs devront lancer `npx expo prebuild` après clone.
+# ios/
+
+# ─── Android natif (généré par expo prebuild) ────────────────────────────────────
+# android/
+
+# ─── iOS ────────────────────────────────────────────────────────────────────────
+*.xccheckout
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+*.xcuserstate
+ios/.xcode.env.local
+ios/Pods/
+
+# ─── Android ────────────────────────────────────────────────────────────────────
+*.keystore
+!debug.keystore
+.gradle/
+android/app/build/
+
+# ─── macOS ──────────────────────────────────────────────────────────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# ─── Logs ───────────────────────────────────────────────────────────────────────
+npm-debug.*
+yarn-debug.*
+yarn-error.*
+*.log
+
+# ─── Éditeurs ────────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
