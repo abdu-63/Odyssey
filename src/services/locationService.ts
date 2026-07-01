@@ -91,7 +91,7 @@ export async function startBackgroundTracking(): Promise<void> {
     // Android : Foreground Service avec notification persistante
     // (requis pour le background location sur Android 8+)
     foregroundService: {
-      notificationTitle: '🗺️ Explore Map',
+      notificationTitle: '🗺️ Odyssey',
       notificationBody: 'Exploration en cours — découverte de nouvelles zones…',
       notificationColor: '#4FC3F7',
     },

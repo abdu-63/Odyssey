@@ -1,4 +1,4 @@
-package com.yourname.exploremap
+package com.yourname.odyssey
 
 import android.app.Application
 import android.content.res.Configuration

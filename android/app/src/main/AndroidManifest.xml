@@ -32,6 +32,9 @@
         <data android:scheme="explore-map"/>
         <data android:scheme="com.yourname.exploremap"/>
         <data android:scheme="exp+explore-map"/>
+        <data android:scheme="odyssey"/>
+        <data android:scheme="com.yourname.odyssey"/>
+        <data android:scheme="exp+odyssey"/>
       </intent-filter>
     </activity>
   </application>

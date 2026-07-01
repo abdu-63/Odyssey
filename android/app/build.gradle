@@ -94,9 +94,9 @@ packagingOptions {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace 'com.yourname.exploremap'
+    namespace 'com.yourname.odyssey'
     defaultConfig {
-        applicationId 'com.yourname.exploremap'
+        applicationId 'com.yourname.odyssey'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

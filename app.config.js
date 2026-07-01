@@ -4,12 +4,12 @@
 
 /** @type {import('expo/config').ExpoConfig} */
 const config = {
-  name: 'Explore Map',
-  slug: 'explore-map',
+  name: 'Odyssey',
+  slug: 'odyssey',
   version: '1.0.0',
   orientation: 'portrait',
   // Requis par Expo Router pour le deep linking
-  scheme: 'explore-map',
+  scheme: 'odyssey',
   userInterfaceStyle: 'dark',
   newArchEnabled: true,
 
@@ -23,16 +23,16 @@ const config = {
   // ─── iOS ────────────────────────────────────────────────────────────────────
   ios: {
     supportsTablet: false,
-    bundleIdentifier: 'com.yourname.exploremap',
+    bundleIdentifier: 'com.yourname.odyssey',
     infoPlist: {
       // Permission "Quand l'app est utilisée"
       NSLocationWhenInUseUsageDescription:
-        'Explore Map utilise ta position pour dévoiler la carte autour de toi en temps réel.',
+        'Odyssey utilise ta position pour dévoiler la carte autour de toi en temps réel.',
       // Permission "Toujours" — indispensable pour le tracking en arrière-plan
       NSLocationAlwaysAndWhenInUseUsageDescription:
-        "Explore Map suit ta position en arrière-plan pour enregistrer ton exploration même quand l'application n'est pas visible.",
+        "Odyssey suit ta position en arrière-plan pour enregistrer ton exploration même quand l'application n'est pas visible.",
       NSLocationAlwaysUsageDescription:
-        "Explore Map suit ta position en arrière-plan pour enregistrer ton exploration même quand l'application n'est pas visible.",
+        "Odyssey suit ta position en arrière-plan pour enregistrer ton exploration même quand l'application n'est pas visible.",
       // Déclare le mode background "location" — OBLIGATOIRE pour expo-task-manager
       UIBackgroundModes: ['location'],
     },
@@ -44,7 +44,7 @@ const config = {
       foregroundImage: './assets/images/adaptive-icon.png',
       backgroundColor: '#0D0D0D',
     },
-    package: 'com.yourname.exploremap',
+    package: 'com.yourname.odyssey',
     // Permissions déclarées dans AndroidManifest.xml
     permissions: [
       'ACCESS_FINE_LOCATION',
@@ -74,11 +74,11 @@ const config = {
       'expo-location',
       {
         locationAlwaysAndWhenInUsePermission:
-          "Explore Map suit ta position en arrière-plan pour enregistrer ton exploration.",
+          "Odyssey suit ta position en arrière-plan pour enregistrer ton exploration.",
         locationAlwaysPermission:
-          "Explore Map suit ta position en arrière-plan pour enregistrer ton exploration.",
+          "Odyssey suit ta position en arrière-plan pour enregistrer ton exploration.",
         locationWhenInUsePermission:
-          'Explore Map utilise ta position pour dévoiler la carte autour de toi.',
+          'Odyssey utilise ta position pour dévoiler la carte autour de toi.',
         // Active le service en arrière-plan sur Android
         isAndroidBackgroundLocationEnabled: true,
         // Active le foreground service Android (notification persistante lors du tracking)
