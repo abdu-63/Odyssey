@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, StyleSheet, ScrollView, View, TouchableOpacity, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import { COLORS, FOG_THEMES } from '@/utils/constants';
+import { COLORS, FOG_THEMES, H3_RESOLUTION_METRICS } from '@/utils/constants';
 import { useSettingsStore } from '@/store/settingsStore';
 import { getDatabase, loadAllCells, insertCellsBatch } from '@/database/db';
 import { useExplorationStore } from '@/store/explorationStore';
@@ -13,7 +13,7 @@ import * as Sharing from 'expo-sharing';
 import * as DocumentPicker from 'expo-document-picker';
 
 export default function SettingsScreen() {
-  const { themeId, setThemeId } = useSettingsStore();
+  const { themeId, setThemeId, h3Resolution, setH3Resolution } = useSettingsStore();
 
   const handleExportData = async () => {
     try {
@@ -146,6 +146,30 @@ export default function SettingsScreen() {
     );
   };
 
+  const handleResolutionChange = (newRes: number) => {
+    if (newRes === h3Resolution) return;
+
+    Alert.alert(
+      'Changer la taille des hexagones',
+      `Voulez-vous passer à la taille "${H3_RESOLUTION_METRICS[newRes].label}" ? Vos données d'exploration existantes seront converties à cette nouvelle échelle.`,
+      [
+        { text: 'Annuler', style: 'cancel' },
+        {
+          text: 'Confirmer',
+          onPress: async () => {
+            try {
+              await setH3Resolution(newRes);
+              Alert.alert('Échelle modifiée', 'La taille des hexagones a été mise à jour avec succès.');
+            } catch (e) {
+              console.error('[SettingsScreen] Failed to change resolution:', e);
+              Alert.alert('Erreur', 'Impossible de modifier la taille des hexagones.');
+            }
+          },
+        },
+      ]
+    );
+  };
+
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
       <ScrollView contentContainerStyle={styles.content}>
@@ -176,6 +200,40 @@ export default function SettingsScreen() {
                 </View>
                 {isSelected && (
                   <Ionicons name="checkmark-circle" size={20} color={theme.accentColor} />
+                )}
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+
+        {/* Section Taille de la Grille */}
+        <Text style={styles.sectionHeader}>📐 Taille de la Grille</Text>
+        <View style={styles.sectionCard}>
+          <Text style={styles.subSectionHeader}>Résolution des Hexagones</Text>
+          {Object.entries(H3_RESOLUTION_METRICS).map(([resStr, metric], i, arr) => {
+            const resVal = Number(resStr);
+            const isSelected = resVal === h3Resolution;
+            return (
+              <TouchableOpacity
+                key={resVal}
+                style={[
+                  styles.themeItem,
+                  isSelected && styles.themeItemActive,
+                  i === arr.length - 1 && styles.noBorder
+                ]}
+                onPress={() => handleResolutionChange(resVal)}
+                activeOpacity={0.7}
+              >
+                <View style={styles.resolutionContainer}>
+                  <Text style={[styles.themeName, isSelected && styles.themeNameActive]}>
+                    {metric.label} (Résolution {resVal})
+                  </Text>
+                  <Text style={styles.resolutionDesc}>
+                    {metric.description}
+                  </Text>
+                </View>
+                {isSelected && (
+                  <Ionicons name="checkmark-circle" size={20} color={COLORS.accent} />
                 )}
               </TouchableOpacity>
             );
@@ -298,6 +356,17 @@ const styles = StyleSheet.create({
   },
   noBorder: {
     borderBottomWidth: 0,
+  },
+  resolutionContainer: {
+    flexDirection: 'column',
+    flex: 1,
+    paddingRight: 10,
+  },
+  resolutionDesc: {
+    color: COLORS.textSecondary,
+    fontSize: 12,
+    fontWeight: '400',
+    marginTop: 2,
   },
   settingsButton: {
     flexDirection: 'row',

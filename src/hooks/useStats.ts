@@ -1,6 +1,5 @@
 import { useStatsStore } from '@/store/statsStore';
 import type { ExplorationStats } from '@/types';
-import { H3_CELL_AREA_KM2_RES10 } from '@/utils/constants';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 

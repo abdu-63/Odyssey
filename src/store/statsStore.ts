@@ -1,7 +1,8 @@
 import { create } from 'zustand';
 import type { ExplorationStats, ExploredCell } from '@/types';
-import { H3_CELL_AREA_KM2_RES10, H3_TOTAL_CELLS_RES10 } from '@/utils/constants';
+import { H3_RESOLUTION_METRICS } from '@/utils/constants';
 import { useExplorationStore } from './explorationStore';
+import { useSettingsStore } from './settingsStore';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -15,10 +16,15 @@ interface StatsStoreState {
 
 function computeStats(cells: ExploredCell[]): ExplorationStats {
   const cellCount = cells.length;
-  const totalAreaKm2 = cellCount * H3_CELL_AREA_KM2_RES10;
-  // Distance estimée : on approxime que chaque cellule nouvelle nécessite ~65m de marche
-  const estimatedDistanceKm = (cellCount * 65) / 1000;
-  const worldPercentage = (cellCount / H3_TOTAL_CELLS_RES10) * 100;
+  
+  // Obtenir la résolution active et ses métriques correspondantes
+  const resolution = useSettingsStore.getState().h3Resolution;
+  const metrics = H3_RESOLUTION_METRICS[resolution] || H3_RESOLUTION_METRICS[10];
+
+  const totalAreaKm2 = cellCount * metrics.areaKm2;
+  // Distance estimée : on approxime que chaque nouvelle cellule nécessite la distance estimée d'une cellule de cette résolution
+  const estimatedDistanceKm = (cellCount * metrics.estimatedDistanceMeters) / 1000;
+  const worldPercentage = (cellCount / metrics.totalCells) * 100;
 
   // Groupement par Pays et Villes
   const countryMap = new Map<string, number>();

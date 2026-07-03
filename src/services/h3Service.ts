@@ -1,12 +1,14 @@
-import { latLngToCell, cellToBoundary, gridDisk, cellToLatLng } from 'h3-js';
-import { H3_RESOLUTION, MIN_GPS_ACCURACY_METERS } from '@/utils/constants';
+import { latLngToCell, cellToBoundary, gridDisk, cellToLatLng, getResolution, cellToParent } from 'h3-js';
+import { MIN_GPS_ACCURACY_METERS } from '@/utils/constants';
 import type { H3Index, LocationPoint } from '@/types';
+import { useSettingsStore } from '@/store/settingsStore';
 
 /**
- * Convertit une coordonnée GPS en index H3 à la résolution configurée (10).
+ * Convertit une coordonnée GPS en index H3 à la résolution active.
  */
 export function coordsToH3(lat: number, lng: number): H3Index {
-  return latLngToCell(lat, lng, H3_RESOLUTION);
+  const resolution = useSettingsStore.getState().h3Resolution;
+  return latLngToCell(lat, lng, resolution);
 }
 
 /**
@@ -51,4 +53,31 @@ export function filterNewCells(
   exploredSet: ReadonlySet<H3Index>
 ): H3Index[] {
   return candidates.filter((idx) => !exploredSet.has(idx));
+}
+
+/**
+ * Retourne la résolution d'un index H3.
+ */
+export function getCellResolution(index: H3Index): number {
+  return getResolution(index);
+}
+
+/**
+ * Migre un index H3 d'une ancienne résolution vers la résolution active.
+ * Si l'ancienne résolution est plus fine (ex: 10) que la résolution cible (ex: 9),
+ * retourne le parent à la résolution cible.
+ */
+export function migrateCellToCurrentResolution(index: H3Index): H3Index {
+  const targetResolution = useSettingsStore.getState().h3Resolution;
+  const currentResolution = getResolution(index);
+
+  if (currentResolution === targetResolution) {
+    return index;
+  }
+
+  if (currentResolution > targetResolution) {
+    return cellToParent(index, targetResolution);
+  }
+
+  return index;
 }

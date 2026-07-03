@@ -1,11 +1,40 @@
 // ─── H3 Geospatial ────────────────────────────────────────────────────────────
 
 /**
- * Résolution H3 utilisée pour le Fog of War.
+ * Métriques des résolutions H3 supportées pour le Fog of War.
  * Résolution 10 : ~15 000 m² par hexagone, rayon moyen ~65 m.
- * Sweet spot pour une exploration à pied (ni trop grossier, ni trop dense).
+ * Résolution 9 : ~105 000 m² par hexagone, rayon moyen ~191 m.
+ * Résolution 8 : ~737 000 m² par hexagone, rayon moyen ~505 m.
  */
-export const H3_RESOLUTION = 10;
+export const H3_RESOLUTION_METRICS: Record<number, {
+  areaKm2: number;
+  totalCells: number;
+  estimatedDistanceMeters: number;
+  label: string;
+  description: string;
+}> = {
+  10: {
+    areaKm2: 0.0150474,
+    totalCells: 33_782_160_994,
+    estimatedDistanceMeters: 65,
+    label: 'Petit',
+    description: 'Rayon ~65m, idéal pour l\'exploration à pied'
+  },
+  9: {
+    areaKm2: 0.1053075,
+    totalCells: 4_826_022_994,
+    estimatedDistanceMeters: 191,
+    label: 'Moyen',
+    description: 'Rayon ~191m, équilibre marche / vélo'
+  },
+  8: {
+    areaKm2: 0.7371527,
+    totalCells: 689_431_854,
+    estimatedDistanceMeters: 505,
+    label: 'Grand',
+    description: 'Rayon ~505m, idéal pour le vélo ou la voiture'
+  }
+};
 
 /**
  * Distance minimale (en mètres) entre deux positions GPS consécutives
@@ -77,16 +106,7 @@ export const COLORS = {
 } as const;
 
 // ─── Statistiques ─────────────────────────────────────────────────────────────
-
-/**
- * Nombre total de cellules H3 résolution 10 sur Terre.
- * Utilisé comme dénominateur pour le calcul du % d'exploration mondiale.
- * Source : h3geo.org/docs/core-library/restable
- */
-export const H3_TOTAL_CELLS_RES10 = 33_782_160_994;
-
-/** Surface d'une cellule H3 résolution 10 en km² (valeur moyenne). */
-export const H3_CELL_AREA_KM2_RES10 = 0.0150474;
+// Les statistiques sont désormais calculées dynamiquement à l'aide de H3_RESOLUTION_METRICS.
 
 // ─── Achievements ─────────────────────────────────────────────────────────────
 
